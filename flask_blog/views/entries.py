@@ -1,13 +1,14 @@
 from flask import request, redirect, url_for, render_template, flash, session
 from flask_blog import app
 from flask_blog import db
-from flask_blog.models.entries import Entry
+from flask_blog.models.entries import Entry, User
 
 @app.route('/')
 def show_entries():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    entries = Entry.query.order_by(Entry.id.desc()).all()
+    users_id= session['users_id']
+    entries = Entry.query.filter_by(users_id=users_id).order_by(Entry.id.desc()).all()
     return render_template('entries/index.html', entries=entries)
 
 
@@ -16,6 +17,7 @@ def add_entry():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     entry = Entry(
+            users_id=session['users_id'],
             title=request.form['title'],
             text=request.form['text']
             )
