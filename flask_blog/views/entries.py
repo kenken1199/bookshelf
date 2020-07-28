@@ -7,8 +7,7 @@ from flask_blog.models.entries import Entry, User
 def show_entries():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
-    users_id= session['users_id']
-    entries = Entry.query.filter_by(users_id=users_id).order_by(Entry.id.desc()).all()
+    entries = Entry.query.filter_by(users_id=session['users_id']).order_by(Entry.id.desc()).all()
     return render_template('entries/index.html', entries=entries)
 
 

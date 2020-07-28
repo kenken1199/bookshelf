@@ -23,8 +23,6 @@ class Entry(db.Model):
     text = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
 
-    user = db.relationship("User")
-
     def __init__(self, users_id=None, title=None, text=None,):
         self.users_id = users_id
         self.title = title
