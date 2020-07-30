@@ -1,15 +1,23 @@
 {% extends "layout.html" %}
-{% block body %}
-<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-<div class="form-group">
-    <label for="InputTitle">タイトル</label>
-    <input type="text" class="form-control" id="InputTitle" name=title>
-    </div>
 
-    <div class="form-group">
-    <label for="InputText">本文</label>
-    <textarea class="form-control" id="InputText" name=text rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">作成</button>
+{% block body %}
+
+    <h1 style="margin-bottom:50px">書籍の追加</h1>
+
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+        <div class="form-group">
+            <label>本のタイトル</label>
+            <input type="text" class="form-control" name="title">
+        </div>
+        <div class="form-group">
+            <label>著者</label>
+            <input type="text" class="form-control" name="auther">
+        </div>
+        <div class="form-group">
+            <label>出版社</label>
+            <input type="text" class="form-control" name="publisher">
+        </div>
+        <button type="submit" class="btn btn-primary">新規追加</button>
     </form>
+
 {% endblock %}

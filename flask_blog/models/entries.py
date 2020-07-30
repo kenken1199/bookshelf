@@ -20,14 +20,11 @@ class Entry(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     title = db.Column(db.String(50), unique=True)
-    text = db.Column(db.Text)
-    created_at = db.Column(db.DateTime)
+    auther = db.Column(db.Text)
+    publisher = db.Column(db.Text)
 
-    def __init__(self, users_id=None, title=None, text=None,):
+    def __init__(self, users_id=None, title=None, auther=None, publisher=None,):
         self.users_id = users_id
         self.title = title
-        self.text = text
-        self.created_at = datetime.utcnow()
-
-    def __repr__(self):
-        return '<Entry id:{} title:{} text:{}>'.format(self.id, self.title, self.text)
+        self.auther = auther
+        self.publisher = publisher

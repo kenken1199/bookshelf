@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+    <h1 style="margin-bottom:50px">書籍の削除の確認</h1>
+
+    <p>{{ entry.title }}を本当に削除しますか？（<a href={{ url_for('show_entries') }}>戻る</a>）</p>
+
+    <form method="post">
+        <button type="submit" class="btn btn-primary">書籍の削除</button>
+    </form>
+
+{% endblock %}
