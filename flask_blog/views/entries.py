@@ -4,6 +4,11 @@ from flask_blog import db
 from flask_blog.models.entries import Entry, User
 
 @app.route('/')
+def top():
+    return render_template('entries/top.html')
+
+
+@app.route('/show')
 def show_entries():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
@@ -17,12 +22,13 @@ def add_entry():
         return redirect(url_for('login'))
     entry = Entry(
             users_id=session['users_id'],
-            title=request.form['title'],
-            text=request.form['text']
+            title = request.form['title'],
+            auther = request.form['auther'],
+            publisher = request.form['publisher'],
             )
     db.session.add(entry)
     db.session.commit()
-    flash('新しく記事が作成されました')
+    flash('書籍が追加されました')
     return redirect(url_for('show_entries'))
 
 
@@ -31,14 +37,6 @@ def new_entry():
     if not session.get('logged_in'):
         return redirect(url_for('login'))
     return render_template('entries/new.html')
-
-@app.route('/entries/<int:id>', methods=['GET'])
-def show_entry(id):
-    if not session.get('logged_in'):
-        return redirect(url_for('login'))
-    entry = Entry.query.get(id)
-    return render_template('entries/show.html', entry=entry)
-
 
 @app.route('/entries/<int:id>/edit', methods=['GET'])
 def edit_entry(id):
@@ -54,11 +52,21 @@ def update_entry(id):
         return redirect(url_for('login'))
     entry = Entry.query.get(id)
     entry.title = request.form['title']
-    entry.text = request.form['text']
+    entry.auther = request.form['auther']
+    entry.publisher = request.form['publisher']
+
     db.session.merge(entry)
     db.session.commit()
-    flash('記事が更新されました')
+    flash('書籍が編集されました')
     return redirect(url_for('show_entries'))
+
+@app.route('/entries/<int:id>/delete', methods=['GET'])
+def delete_check(id):
+    if not session.get('logged_in'):
+        return redirect(url_for('login'))
+    entry = Entry.query.get(id)
+    return render_template('entries/delete.html', entry=entry)
+
 
 
 @app.route('/entries/<int:id>/delete', methods=['POST'])
